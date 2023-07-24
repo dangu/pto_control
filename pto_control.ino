@@ -11,9 +11,6 @@
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "AVR_Slow_PWM.h"
 
-#define LED_OFF HIGH
-#define LED_ON LOW
-
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 13
 #endif
@@ -43,7 +40,7 @@ void TimerHandler() {
 uint32_t PWM_Pin = LED_BUILTIN;
 
 // You can assign any interval for any timer here, in Hz
-float PWM_Freq = 50.0f;
+float PWM_Freq = 8.0f;
 
 // You can assign any duty_cycle for any PWM here, from 0-100
 float PWM_DutyCycle1 = 20.0;
@@ -109,7 +106,7 @@ void loop() {
   if (Serial.available() > 0) {
     receivedChar = Serial.read();
     if ((receivedChar >= '0') && (receivedChar <= '9')) {
-      dutyCycle = (receivedChar - '0') * 10.0;
+      dutyCycle = (receivedChar - '0') * 10.0/2.0;
       changeDutyCycle(dutyCycle);
     } else if (receivedChar == 'a') {
       dutyCycle = 100.0;
